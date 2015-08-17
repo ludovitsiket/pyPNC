@@ -15,6 +15,13 @@ def prg ():
     print "odkial ",odkial
     print "kam ",kam
     print "meno suboru ",meno
+    source=odkial
+    zip=zipfile.ZipFile(kam+meno, 'w',zipfile.ZIP_DEFLATED)
+    rootlen=len(source)+1
+    for base,dirs,files in os.walk(source):
+        for file in files:
+            fn=os.path.join(base,file)
+            zip.write(fn,fn[rootlen:])
 
 if len(sys.argv)<=3: #program vyzaduje 3 parametre
     chyba()
