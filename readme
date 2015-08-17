@@ -1,0 +1,5 @@
+pyPNC
+Program na zalohovanie pisany v pythone.
+
+17.8.2015
+Prve demo, nacitanie parametrov z terminalu a kontrola ich uplnosti.
