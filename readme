@@ -5,4 +5,4 @@ Program na zalohovanie pisany v pythone.
 Prve demo, nacitanie parametrov z terminalu a kontrola ich uplnosti.
 Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru.zip
 - parametre su oddelovane medzerou
-- za meno suboru treba dopisat .zip
+- pripona .zip bude pridana automaticky
