@@ -16,7 +16,7 @@ def prg ():
     print "kam ",kam
     print "meno suboru ",meno
     source=odkial
-    zip=zipfile.ZipFile(kam+meno, 'w',zipfile.ZIP_DEFLATED)
+    zip=zipfile.ZipFile(meno, 'w',zipfile.ZIP_DEFLATED)
     rootlen=len(source)+1
     for base,dirs,files in os.walk(source):
         for file in files:
