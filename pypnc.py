@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # pyPNC, program na zalohovanie
 import sys
+import os
+import zipfile
 def chyba():
     print "Nezadal si vsetky potrebne parametre programu."
     print "Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru"
