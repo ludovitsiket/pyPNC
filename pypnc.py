@@ -4,7 +4,7 @@ import sys
 import os
 import zipfile
 from time import gmtime, strftime
-from ftplib import FTP
+from ftplib import FTP_TLS
 meno=[]
 ps=[]
 my_list=[]
@@ -23,16 +23,16 @@ def citaj ():
     
 def connect ():
     citaj ()
-    ftp=FTP('localhost') #tu je adresa serveru ftp
-    ftp.login(meno,ps)
-    ftp.getwelcome() #uvitacia sprava zo serveru
-    aaa=ftp.retrlines('LIST')
-    print aaa
-    adr=ftp.pwd()
+    ftps=FTP_TLS('localhost') #tu je adresa serveru ftp
+    ftps.login(meno,ps)
+    #ftps.getwelcome() #uvitacia sprava zo serveru
+    ftps.prot_p()
+    ftps.retrlines('LIST')
+    adr=ftps.pwd()
     print "Aktualny adresar:",adr
-    files=ftp.dir()
+    files=ftps.dir()
     print "Obsah adresara:",files 
-    print "Koniec spojenia.",ftp.quit()
+    print "Koniec spojenia.",ftps.quit()
 
 def prg ():
     print "Cakajte prosim, program robi co moze."
