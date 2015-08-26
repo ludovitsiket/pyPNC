@@ -15,8 +15,24 @@ def chyba():
 
 def chyba2(): #este do programu zakomponovat
     print "Programu naozaj stacia 3 parametre...\n"
+print "Cakajte prosim, program robi co moze. Naozaj sa snazi."
 
-def connect ():
+odkial=sys.argv[1]
+kam=sys.argv[2]
+meno=sys.argv[3]
+source=odkial
+cas=strftime("_%Y-%m-%d_%H:%M:%S", gmtime())
+subor=meno+cas+".zip"
+zip=zipfile.ZipFile(subor, 'w',zipfile.ZIP_DEFLATED) # nezipuje velke subory (treba zip64 extension)!
+rootlen=len(source)+1
+for base,dirs,files in os.walk(source):
+    for file in files:
+        fn=os.path.join(base,file)
+        zip.write(fn,fn[rootlen:])
+print "[OK]\nSubor sa nachadza v urcenom adresary",kam
+if len(sys.argv)<=3: #program vyzaduje 3 parametre
+   chyba()
+else:
     with open('/home/peter/pwd','r') as infile:
         data=infile.read()
     my_list=data.splitlines()
@@ -25,28 +41,6 @@ def connect ():
     ftp=FTP_TLS("localhost",meno,ps) 
     ftp.prot_p()
     ftp.retrlines("LIST")
-    file=open(subor,"r")
-    print "subor otvoreny"
-    file.close()
-    print "subor zatvoreny"
+    ftp.storbinary("STORE"+subor, open(file, 'rb'))
+#    ftp.storlines('STOR'+subor, open(subor, 'rb'))
     ftp.close()
-else:
-    print "Cakajte prosim, program robi co moze. Naozaj sa snazi."
-    odkial=sys.argv[1]
-    kam=sys.argv[2]
-    meno=sys.argv[3]
-    source=odkial
-    cas=strftime("_%Y-%m-%d_%H:%M:%S", gmtime())
-    subor=meno+cas+".zip"
-    zip=zipfile.ZipFile(subor, 'w',zipfile.ZIP_DEFLATED) # nezipuje velke subory (treba zip64 extension)!
-    rootlen=len(source)+1
-    for base,dirs,files in os.walk(source):
-        for file in files:
-            fn=os.path.join(base,file)
-            zip.write(fn,fn[rootlen:])
-    print "[OK]\nSubor sa nachadza v urcenom adresary",kam
-if len(sys.argv)<=3: #program vyzaduje 3 parametre
-   chyba()
-else:
-    connect ()
-
