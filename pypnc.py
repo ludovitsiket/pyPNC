@@ -1,10 +1,10 @@
 #!/usr/bin/python
-# pyPNC, program na zalohovanie, branch ftps, je to rozbite
+# pyPNC, program na zalohovanie, branch ftps
 import sys
 import os
 import zipfile
 from time import gmtime, strftime
-from ftplib import FTP_TLS #aj takto sa da
+from ftplib import FTP_TLS 
 meno=[]
 ps=[]
 my_list=[]
@@ -25,9 +25,12 @@ def connect ():
     ftp=FTP_TLS("localhost",meno,ps) 
     ftp.prot_p()
     ftp.retrlines("LIST")
-    print "Uspesne zapojeny !"  # mozno raz
+    file=open(subor,"r")
+    print "subor otvoreny"
+    file.close()
+    print "subor zatvoreny"
     ftp.close()
-def prg ():
+else:
     print "Cakajte prosim, program robi co moze. Naozaj sa snazi."
     odkial=sys.argv[1]
     kam=sys.argv[2]
@@ -44,8 +47,6 @@ def prg ():
     print "[OK]\nSubor sa nachadza v urcenom adresary",kam
 if len(sys.argv)<=3: #program vyzaduje 3 parametre
    chyba()
-#else: prg()
 else:
-    prg()
     connect ()
 
