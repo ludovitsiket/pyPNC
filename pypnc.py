@@ -28,15 +28,20 @@ else:
     for base,dirs,files in os.walk(source):
         for file in files:
             fn=os.path.join(base,file)
-            zip.write(fn,fn[rootlen:])
+            souborek=zip.write(fn,fn[rootlen:])
+            suborik=str(souborek)
     print "[OK]\nSubor sa nachadza v urcenom adresary",kam
     with open('/home/peter/pwd','r') as infile:
         data=infile.read()
     my_list=data.splitlines()
     meno=my_list[0]
     ps=my_list[1]
-    ftp=FTP_TLS("localhost",meno,ps) 
+    path=my_list[2]
+    server=my_list[3]
+    ftp=FTP_TLS(server,meno,ps) 
     ftp.prot_p()
+    ftp.cwd(my_list[2])
     ftp.retrlines("LIST")
-    ftp.storbinary("STORE"+subor, open(file, 'rb'))
+    print "Posielam subor. Znova cakajte..."
+    ftp.sendcmd("STOR suborik")
     ftp.close()
