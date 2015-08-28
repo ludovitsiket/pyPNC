@@ -7,6 +7,8 @@ from time import gmtime, strftime
 from ftplib import FTP_TLS 
 import fnmatch
 
+odkial=[]
+kam=[]
 meno=[]
 ps=[]
 my_list=[]
@@ -64,9 +66,7 @@ def check_file_size(velkost_local):
         print "Meno a velkost preneseneho suboru sa zhoduju. [OK]"
     sys.exit()
 
-if len(sys.argv)<=3: #program vyzaduje 3 parametre
-   chyba()
-else:
+def ziping(odkial,kam,meno):
     print "Cakajte prosim, program vytvara .zip subor. V zavislosti od velkosti to moze trvat niekolko minut." 
     odkial=sys.argv[1]
     kam=sys.argv[2]
@@ -81,6 +81,11 @@ else:
             fn=os.path.join(base,file)
             file_to_zip=zip.write(fn,fn[rootlen:]) 
     print "Subor sa nachadza v urcenom adresary",kam,"[OK]"
+
+if len(sys.argv)<=3: #program vyzaduje 3 parametre
+   chyba()
+else:
+    ziping(odkial,kam,meno)
     with open('/home/peter/pwd','r') as infile:
         data=infile.read()
     my_list=data.splitlines()
