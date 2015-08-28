@@ -18,7 +18,7 @@ velkost_local=""
 reconnect=0
 max_recon=1 
 
-def nazov(timestamp_arg): #tato fcia nejde
+def nazov(timestamp_arg): 
     if timestamp_arg == "time":
         cas=strftime("_%Y-%m-%d_%H:%M:%S", gmtime()) 
     elif timestamp_arg == "notime":
@@ -73,8 +73,7 @@ else:
     meno=sys.argv[3]
     timestamp_arg=sys.argv[4]
     source=odkial
-    nazov(timestamp_arg)
-    subor=meno+cas+".zip" 
+    subor=meno+nazov(timestamp_arg)+".zip" 
     zip=zipfile.ZipFile(subor, 'w',zipfile.ZIP_DEFLATED,"allowZip64=True") 
     rootlen=len(source)+1
     for base,dirs,files in os.walk(source):
