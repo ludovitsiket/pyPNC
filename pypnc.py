@@ -16,6 +16,7 @@ pwd_file=[]
 file_to_zip=""
 cas=""
 velkost_ftp=""
+pocet=""
 velkost_local=""
 reconnect=0
 max_recon=1 
@@ -35,16 +36,18 @@ def chyba():
     print "cesta_k_zdroj_zlozke = cesta k zlozke ktora sa ma komprimovat \ncesta_k_ciel_zlozke = cesta k zlozke kam ma byt presunuty komprimovany subor \nmeno_suboru.zip = nazov pod ktorym sa komprimovany subor ulozi. Pripona .zip bude pridana automaticky.\n"
     sys.exit()
 
-def connect(velkost_ftp):
-    ftp=FTP_TLS(server,meno2,ps)   
+def connect(velkost_ftp,port):
+    ftp=FTP_TLS(server,meno2,ps,port)   
     ftp.prot_p()
     ftp.cwd(my_list[2]) 
-    ftp.retrlines("LIST")
     print "Posielam subor. Cakajte prosim."
     ftp.storbinary('STOR '+file_to_send, open(file_to_send, 'rb'),)
     print "Subor odoslany [OK]"
+    print "Obsah adresara na serveri:"
+    ftp.retrlines("LIST")
     size_ftp=ftp.nlst()
-    velkost_ftp_subor=size_ftp[0] #berie len prvy subor zo zoznamu
+    pocet=len(size_ftp)
+    velkost_ftp_subor=size_ftp[pocet-1] #berie posledne pridany subor zo zoznamu
     ftp.sendcmd("TYPE i")
     velkost_ftp=ftp.size(velkost_ftp_subor) 
     ftp.close()
@@ -54,16 +57,16 @@ def resend(reconnect,max_recon):
     print "Velkosti suborov sa lisia, pravdepodobne doslo k chybe.\nOpakujem posielanie suboru."
     while reconnect <= max_recon :
           reconnect=reconnect+1
-          connect(velkost_ftp)
+          connect(velkost_ftp,port)
     print "Subor bol preposlany. Zistujem ci sa napravila chyba."
-    if velkost_local!=connect(velkost_ftp):
+    if velkost_local!=connect(velkost_ftp,port):
        print "Chybu sa nepodarilo odstranit, skontrolujte subory manualne."
 
 def check_file_size(velkost_local):
-    if velkost_local!=connect(velkost_ftp):
+    if velkost_local!=connect(velkost_ftp,port):
         resend(reconnect,max_recon)
     else :
-        print "Meno a velkost preneseneho suboru sa zhoduju. [OK]"
+        print "Meno a velkost prave preneseneho suboru sa zhoduju. [OK]"
     sys.exit()
 
 if len(sys.argv)<=3: #program vyzaduje 3 parametre
@@ -91,9 +94,10 @@ else:
     ps=my_list[1]
     path=my_list[2]
     server=my_list[3]
+    port=my_list[4]
     for file in os.listdir('.'):
         if fnmatch.fnmatch(file,"*.zip"):
             file_to_send=str(file) 
     velkost_local=os.path.getsize(file_to_send)
     check_file_size(velkost_local)
-    connect(velkost_ftp)
+    connect(velkost_ftp,port)
