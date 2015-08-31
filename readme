@@ -11,6 +11,7 @@ Automatické zálohovanie je riešené v Ubuntu pomocou crontab v terminály nas
 59 23 * * * /usr/bin/python /cesta k zlozke so skriptom/pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru timestamp cesta_a_meno_suboru_s_login_udajmi >>/tmp/out.txt 2>&1
 - 59 sú minúty, 23 je hodina => skript sa spustí každý deň v týždni, v každom mesiaci o 23:59 hodine
 - out.txt je log v ktorom sa dajú overiť kroky ktoré skript vykonal
+- aktuálny stav crontab sa dá overiť príkazom crontab -l
 _________
 17.8.2015
 Prve demo, nacitanie parametrov z terminalu a kontrola ich uplnosti.
