@@ -4,6 +4,7 @@ Program na zálohovanie zložky do .zip a jej odoslanie na ftps server.
 31.8.2015
 Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru timestamp (time pre ulozenie casu do mena suboru, notime pre vynechanie timestampu) cesta_a_meno_suboru_s_login_udajmi"
 cesta_k_zdroj_zlozke = cesta k zlozke ktora sa ma komprimovat \ncesta_k_ciel_zlozke = cesta k zlozke kam ma byt presunuty komprimovany subor \nmeno_suboru.zip = nazov pod ktorym sa komprimovany subor ulozi. Pripona .zip bude pridana automaticky.\n"
+- Zabezpečiť vždy rovnaké meno súboru s rôznym timestamp kvôli porovnávaniu veľkosti súborov
 
 Automatické zálohovanie je riešené v Ubuntu pomocou crontab v terminály nasledovne:
 - zadať crontab -e
