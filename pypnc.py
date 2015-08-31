@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# pyPNC, program na zalohovanie, branch ftps
+# pyPNC, program na zalohovanie
 import sys
 import os
 import zipfile
@@ -12,9 +12,9 @@ kam=[]
 meno=[]
 ps=[]
 my_list=[]
+pwd_file=[]
 file_to_zip=""
 cas=""
-#velkost_ftp="1234" #test
 velkost_ftp=""
 velkost_local=""
 reconnect=0
@@ -31,7 +31,7 @@ def nazov(timestamp_arg):
 
 def chyba():
     print "Nezadali ste vsetky potrebne parametre programu."
-    print "Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru timestamp (time pre ulozenie casu do mena suboru, notime pre vynechanie timestampu)"
+    print "Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru timestamp (time pre ulozenie casu do mena suboru, notime pre vynechanie timestampu) cesta a meno suboru s login udajmi"
     print "cesta_k_zdroj_zlozke = cesta k zlozke ktora sa ma komprimovat \ncesta_k_ciel_zlozke = cesta k zlozke kam ma byt presunuty komprimovany subor \nmeno_suboru.zip = nazov pod ktorym sa komprimovany subor ulozi. Pripona .zip bude pridana automaticky.\n"
     sys.exit()
 
@@ -46,7 +46,7 @@ def connect(velkost_ftp):
     size_ftp=ftp.nlst()
     velkost_ftp_subor=size_ftp[0] #berie len prvy subor zo zoznamu
     ftp.sendcmd("TYPE i")
-    velkost_ftp=ftp.size(velkost_ftp_subor) #test
+    velkost_ftp=ftp.size(velkost_ftp_subor) 
     ftp.close()
     return velkost_ftp
 
@@ -66,7 +66,9 @@ def check_file_size(velkost_local):
         print "Meno a velkost preneseneho suboru sa zhoduju. [OK]"
     sys.exit()
 
-def ziping(odkial,kam,meno):
+if len(sys.argv)<=3: #program vyzaduje 3 parametre
+   chyba()
+else:
     print "Cakajte prosim, program vytvara .zip subor. V zavislosti od velkosti to moze trvat niekolko minut." 
     odkial=sys.argv[1]
     kam=sys.argv[2]
@@ -81,12 +83,8 @@ def ziping(odkial,kam,meno):
             fn=os.path.join(base,file)
             file_to_zip=zip.write(fn,fn[rootlen:]) 
     print "Subor sa nachadza v urcenom adresary",kam,"[OK]"
-
-if len(sys.argv)<=3: #program vyzaduje 3 parametre
-   chyba()
-else:
-    ziping(odkial,kam,meno)
-    with open('/home/peter/pwd','r') as infile:
+    pwd_file=sys.argv[5]
+    with open(pwd_file,'r') as infile:
         data=infile.read()
     my_list=data.splitlines()
     meno2=my_list[0]
