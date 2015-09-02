@@ -56,11 +56,12 @@ def connect(velkost_ftp,port):
 def resend(reconnect,max_recon):
     print "Velkosti suborov sa lisia, pravdepodobne doslo k chybe.\nOpakujem posielanie suboru."
     while reconnect <= max_recon :
-          reconnect=reconnect+1
           connect(velkost_ftp,port)
+          reconnect=reconnect+1
     print "Subor bol preposlany. Zistujem ci sa napravila chyba."
     if velkost_local!=connect(velkost_ftp,port):
        print "Chybu sa nepodarilo odstranit, skontrolujte subory manualne."
+       sys.exit()
 
 def check_file_size(velkost_local):
     if velkost_local!=connect(velkost_ftp,port):
