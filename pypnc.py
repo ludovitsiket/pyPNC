@@ -41,7 +41,10 @@ def connect(velkost_ftp,port):
     ftp.prot_p()
     ftp.cwd(my_list[2]) 
     print "Posielam subor. Cakajte prosim."
-    ftp.storbinary('STOR '+file_to_send, open(file_to_send, 'rb'),)
+    obsah=open(file_to_send, 'rb')
+    obsah.close()
+    ftp.storbinary('STOR %s' % file_to_send, open(file_to_send, 'rb'))
+    obsah.close()
     print "Subor odoslany [OK]"
     print "Obsah adresara na serveri:"
     ftp.retrlines("LIST")
@@ -87,6 +90,7 @@ else:
             fn=os.path.join(base,file)
             file_to_zip=zip.write(fn,fn[rootlen:]) 
     print "Subor sa nachadza v urcenom adresary",kam,"[OK]"
+    zip.close()
     pwd_file=sys.argv[5]
     with open(pwd_file,'r') as infile:
         data=infile.read()
