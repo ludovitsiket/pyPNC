@@ -2,9 +2,22 @@ pyPNC
 Program na zálohovanie zložky do .zip a jej odoslanie na ftps server.
 
 31.8.2015
-Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru timestamp (time pre ulozenie casu do mena suboru, notime pre vynechanie timestampu) cesta_a_meno_suboru_s_login_udajmi"
-cesta_k_zdroj_zlozke = cesta k zlozke ktora sa ma komprimovat \ncesta_k_ciel_zlozke = cesta k zlozke kam ma byt presunuty komprimovany subor \nmeno_suboru.zip = nazov pod ktorym sa komprimovany subor ulozi. Pripona .zip bude pridana automaticky.\n"
-- Zabezpečiť vždy rovnaké meno súboru s rôznym timestamp kvôli porovnávaniu veľkosti súborov
+Syntax:
+
+python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru timestamp cesta_a_meno_suboru_s_login_udajmi
+
+cesta_k_zdroj_zlozke = cesta k zlozke ktora sa ma komprimovat
+cesta_k_ciel_zlozke = cesta k zlozke kam ma byt presunuty komprimovany subor
+meno_suboru.zip = nazov pod ktorym sa komprimovany subor ulozi. Pripona .zip bude pridana automaticky
+timestamp = time pre ulozenie casu do mena suboru, notime pre vynechanie timestampu
+cesta_a_meno_suboru_s_login_udajmi = subor s login udajmi
+
+v subore s login udajmi su na jednotlivych riadkoch nasledujuce informacie:
+uzivatelske meno
+heslo
+cesta kam sa maju subory ukladat na ftps serveri
+adresa servera
+port servera
 
 Automatické zálohovanie je riešené v Ubuntu pomocou crontab v terminály nasledovne:
 - zadať crontab -e
@@ -16,9 +29,3 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 - out.txt je log v ktorom sa dajú overiť kroky ktoré skript vykonal
 - aktuálny stav crontab sa dá overiť príkazom crontab -l
-_________
-17.8.2015
-Prve demo, nacitanie parametrov z terminalu a kontrola ich uplnosti.
-Syntax: python pypnc.py cesta_k_zdroj_zlozke cesta_k_ciel_zlozke meno_suboru.zip
-- parametre su oddelovane medzerou
-- pripona .zip bude pridana automaticky
